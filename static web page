@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Business Solutions</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header section */
+        .header {
+            background: #3498db;
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .tagline {
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 50px 40px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-section h2 {
+            color: #2980b9;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .intro-section p {
+            font-size: 1.2em;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Image section */
+        .image-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #ebf3fd;
+            border-radius: 8px;
+        }
+
+        .main-image {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
+        }
+
+        /* Features section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: #5dade2;
+            color: white;
+            padding: 40px 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* Call to action section */
+        .cta-section {
+            background: #2980b9;
+            color: white;
+            text-align: center;
+            padding: 50px 30px;
+            margin: 50px 0 0 0;
+            border-radius: 8px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.3em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .intro-section h2 {
+                font-size: 2em;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .cta-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>TechFlow Solutions</h1>
+            <p class="tagline">Innovative Technology for Modern Business</p>
+        </header>
+        
+        <main class="content">
+            <section class="intro-section">
+                <h2>Empowering Your Digital Future</h2>
+                <p>
+                    We specialize in delivering cutting-edge technology solutions that transform businesses 
+                    and drive growth. Our expert team combines innovation with reliability to create 
+                    powerful digital experiences that exceed expectations and deliver measurable results 
+                    for organizations of all sizes.
+                </p>
+            </section>
+            
+            <section class="image-section">
+                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="Professional team working on technology solutions" 
+                     class="main-image">
+            </section>
+            
+            <section class="features">
+                <div class="feature-card">
+                    <h3>Strategic Planning</h3>
+                    <p>Comprehensive business analysis and strategic roadmap development to ensure your technology investments align with your organizational goals and objectives.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Custom Development</h3>
+                    <p>Tailored software solutions built from the ground up to meet your specific requirements, ensuring optimal performance and seamless integration.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock technical support and maintenance services to keep your systems running smoothly and your business operations uninterrupted.</p>
+                </div>
+            </section>
+            
+            <section class="cta-section">
+                <h2>Ready to Transform Your Business?</h2>
+                <p>Join hundreds of satisfied clients who have revolutionized their operations with our innovative solutions.</p>
+                <div class="cta-button">Get Started Today</div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <p>&copy; 2024 TechFlow Solutions. All rights reserved. | Driving innovation through technology excellence.</p>
+        </footer>
+    </div>
+</body>
+</html>
