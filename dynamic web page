@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Hub - Dynamic Learning</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Header section */
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -50%;
+            left: -50%;
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .header:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(20px, 20px);
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1:hover {
+            transform: scale(1.05);
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Content section */
+        .content {
+            padding: 40px 30px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Interactive cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover h3 {
+            color: #667eea;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Animated button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px auto;
+            display: block;
+            width: fit-content;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image with hover effects */
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .dynamic-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            filter: brightness(0.9);
+        }
+
+        .dynamic-image:hover {
+            transform: scale(1.05);
+            filter: brightness(1) contrast(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Pulse animation for icons */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Quote section */
+        .quote-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6em;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: serif;
+        }
+
+        .quote {
+            color: white;
+            font-size: 1.4em;
+            font-style: italic;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-author {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .modal h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .modal p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .modal ul {
+            color: #666;
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        /* Learning progress section */
+        .learning-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .learning-section.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 3px;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 20px;
+            border-radius: 25px;
+            width: 0%;
+            transition: width 2s ease;
+        }
+
+        .achievement {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: scale(0);
+            animation: popIn 0.5s ease forwards;
+        }
+
+        @keyframes popIn {
+            to { transform: scale(1); }
+        }
+
+        /* Payment Page Styles */
+        .payment-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .payment-page.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideInFromRight 0.5s ease;
+        }
+
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .payment-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        .payment-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .payment-close:hover {
+            color: #667eea;
+        }
+
+        .course-title {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .course-subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            font-size: 1.2em;
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        .current-price {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .price-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        .course-features {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+            background: #e9ecef;
+        }
+
+        .feature-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .buy-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .buy-button:hover::before {
+            left: 100%;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .guarantee {
+            color: #28a745;
+            font-size: 0.9em;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="floating">Knowledge Hub</h1>
+            <p class="subtitle">Unlock the power of learning and wisdom</p>
+        </header>
+        
+        <main class="content">
+            <div class="card-container">
+                <div class="card" onclick="openModal('books-modal')">
+                    <div class="card-icon pulse">📚</div>
+                    <h3>Books & Literature</h3>
+                    <p>Dive deep into the world of books, where every page turns into a new adventure and every story expands your understanding of the world.</p>
+                </div>
+                
+                <div class="card" onclick="openModal('thinking-modal')">
+                    <div class="card-icon pulse">🧠</div>
+                    <h3>Critical Thinking</h3>
+                    <p>Develop your analytical skills and learn to question, evaluate, and think independently about the information you encounter daily.</p>
+                </div>
+                
+                <div class="card" onclick="openModal('science-modal')">
+                    <div class="card-icon pulse">🔬</div>
+                    <h3>Science & Discovery</h3>
+                    <p>Explore the wonders of scientific discovery, from the smallest atoms to the vastness of space, and understand how the world works.</p>
+                </div>
+                
+                <div class="card" onclick="openModal('global-modal')">
+                    <div class="card-icon pulse">🌍</div>
+                    <h3>Global Awareness</h3>
+                    <p>Stay informed about world events, different cultures, and global perspectives to become a well-rounded global citizen.</p>
+                </div>
+                
+                <div class="card" onclick="openModal('creative-modal')">
+                    <div class="card-icon pulse">💡</div>
+                    <h3>Creative Learning</h3>
+                    <p>Embrace innovative approaches to learning through creativity, experimentation, and hands-on experiences that make knowledge stick.</p>
+                </div>
+                
+                <div class="card" onclick="openModal('skills-modal')">
+                    <div class="card-icon pulse">🎯</div>
+                    <h3>Skill Development</h3>
+                    <p>Focus on building practical skills that enhance your personal and professional growth while keeping pace with changing times.</p>
+                </div>
+            </div>
+            
+            <div class="quote-section">
+                <p class="quote">The more that you read, the more things you will know. The more that you learn, the more places you'll go.</p>
+                <p class="quote-author">— Dr. Seuss</p>
+            </div>
+            
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                     alt="Stack of books representing knowledge and learning" 
+                     class="dynamic-image">
+            </div>
+            
+            <a href="#" class="cta-button" onclick="startLearning()">Start Learning Today</a>
+            
+            <!-- Learning Progress Section -->
+            <div class="learning-section" id="learning-progress">
+                <h2>🎉 Your Learning Journey Begins!</h2>
+                <p>Welcome to your personalized learning experience. Track your progress as you explore different areas of knowledge.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p id="progress-text">Progress: 0%</p>
+                <div id="achievements"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Windows -->
+    <div id="books-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📚 Books & Literature</h2>
+            <p>Reading is one of the most powerful ways to expand your knowledge and imagination. Here's how to make the most of your reading journey:</p>
+            <ul>
+                <li><strong>Diverse Genres:</strong> Explore fiction, non-fiction, biographies, science, history, and philosophy</li>
+                <li><strong>Active Reading:</strong> Take notes, ask questions, and reflect on what you've read</li>
+                <li><strong>Book Clubs:</strong> Join communities to discuss books and gain new perspectives</li>
+                <li><strong>Speed Reading:</strong> Learn techniques to read faster while maintaining comprehension</li>
+                <li><strong>Digital vs Physical:</strong> Choose the format that works best for your learning style</li>
+            </ul>
+            <p>Remember: "A reader lives a thousand lives before he dies. The man who never reads lives only one." - George R.R. Martin</p>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div class="payment-page" id="payment-page">
+        <div class="payment-container">
+            <span class="payment-close" onclick="closePaymentPage()">&times;</span>
+            
+            <h1 class="course-title">🎓 Complete Knowledge Mastery</h1>
+            <p class="course-subtitle">Unlock Your Full Learning Potential</p>
+            
+            <div class="price-section">
+                <div class="original-price">₹2,999</div>
+                <div class="current-price">₹999</div>
+                <div class="price-tag">🔥 Limited Time Offer - 67% OFF!</div>
+            </div>
+            
+            <div class="course-features">
+                <div class="feature-item">
+                    <span class="feature-icon">📚</span>
+                    <span>Access to 50+ Premium Courses</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎥</span>
+                    <span>100+ Hours of Video Content</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <span>Mobile App & Offline Access</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🏆</span>
+                    <span>Certificates of Completion</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">👨‍🏫</span>
+                    <span>Expert Mentorship & Support</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Lifetime Access - No Expiry</span>
+                </div>
+            </div>
+            
+            <button class="buy-button" onclick="processPurchase()">
+                🛒 Buy Now for ₹999
+            </button>
+            
+            <p class="guarantee">✅ 30-Day Money-Back Guarantee</p>
+        </div>
+    </div>
+
+    <div id="thinking-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🧠 Critical Thinking</h2>
+            <p>Critical thinking is the ability to think clearly and rationally, understanding the logical connection between ideas. It's essential for:</p>
+            <ul>
+                <li><strong>Problem Solving:</strong> Break down complex problems into manageable parts</li>
+                <li><strong>Decision Making:</strong> Evaluate options objectively and make informed choices</li>
+                <li><strong>Information Analysis:</strong> Distinguish between reliable and unreliable sources</li>
+                <li><strong>Logical Reasoning:</strong> Identify logical fallacies and weak arguments</li>
+                <li><strong>Creative Solutions:</strong> Think outside the box while maintaining logical foundations</li>
+            </ul>
+            <p>Practice by questioning assumptions, examining evidence, and considering alternative viewpoints!</p>
+        </div>
+    </div>
+
+    <div id="science-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🔬 Science & Discovery</h2>
+            <p>Science is the systematic study of the natural world through observation and experimentation. Explore these fascinating areas:</p>
+            <ul>
+                <li><strong>Physics:</strong> Understanding matter, energy, and the fundamental forces of the universe</li>
+                <li><strong>Biology:</strong> Exploring life in all its forms, from cells to ecosystems</li>
+                <li><strong>Chemistry:</strong> Discovering how atoms and molecules interact to create everything around us</li>
+                <li><strong>Astronomy:</strong> Investigating the cosmos, stars, planets, and the search for life</li>
+                <li><strong>Environmental Science:</strong> Understanding our planet and how to protect it</li>
+            </ul>
+            <p>Science is not just facts - it's a way of thinking and questioning the world around us!</p>
+        </div>
+    </div>
+
+    <div id="global-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🌍 Global Awareness</h2>
+            <p>In our interconnected world, global awareness helps you understand different cultures, current events, and worldwide challenges:</p>
+            <ul>
+                <li><strong>Cultural Diversity:</strong> Learn about different traditions, languages, and worldviews</li>
+                <li><strong>Current Events:</strong> Stay informed about global news and its impact</li>
+                <li><strong>International Relations:</strong> Understand how countries interact and cooperate</li>
+                <li><strong>Global Challenges:</strong> Climate change, poverty, and sustainable development</li>
+                <li><strong>Digital Citizenship:</strong> Navigate the global digital community responsibly</li>
+            </ul>
+            <p>Being globally aware makes you a more empathetic and informed citizen of the world!</p>
+        </div>
+    </div>
+
+    <div id="creative-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>💡 Creative Learning</h2>
+            <p>Creative learning makes education engaging and memorable. Try these innovative approaches:</p>
+            <ul>
+                <li><strong>Visual Learning:</strong> Use mind maps, diagrams, and infographics</li>
+                <li><strong>Hands-on Experiments:</strong> Learn by doing and experiencing</li>
+                <li><strong>Storytelling:</strong> Turn facts into memorable narratives</li>
+                <li><strong>Gamification:</strong> Use games and challenges to make learning fun</li>
+                <li><strong>Collaborative Projects:</strong> Work with others to solve real-world problems</li>
+            </ul>
+            <p>Creativity and knowledge work together to spark innovation and breakthrough thinking!</p>
+        </div>
+    </div>
+
+    <div id="skills-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🎯 Skill Development</h2>
+            <p>Continuous skill development is key to personal and professional growth. Focus on:</p>
+            <ul>
+                <li><strong>Digital Literacy:</strong> Master technology and digital tools</li>
+                <li><strong>Communication:</strong> Improve writing, speaking, and listening skills</li>
+                <li><strong>Leadership:</strong> Develop the ability to inspire and guide others</li>
+                <li><strong>Adaptability:</strong> Learn to embrace change and new challenges</li>
+                <li><strong>Time Management:</strong> Organize your life for maximum productivity</li>
+            </ul>
+            <p>Skills are like muscles - they grow stronger with practice and regular use!</p>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal when clicking the X or outside the modal
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.onclick = function() {
+                this.closest('.modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+
+        // Learning progress functionality
+        function startLearning() {
+            const learningSection = document.getElementById('learning-progress');
+            learningSection.classList.add('show');
+            
+            // Animate progress bar
+            setTimeout(() => {
+                const progressFill = document.getElementById('progress-fill');
+                const progressText = document.getElementById('progress-text');
+                let progress = 0;
+                
+                const interval = setInterval(() => {
+                    progress += 2;
+                    progressFill.style.width = progress + '%';
+                    progressText.textContent = `Progress: ${progress}%`;
+                    
+                    // Add achievements at milestones
+                    if (progress === 20) addAchievement('🎯 First Step Taken!');
+                    if (progress === 50) addAchievement('📚 Knowledge Seeker!');
+                    if (progress === 80) addAchievement('🧠 Critical Thinker!');
+                    if (progress === 100) {
+                        addAchievement('🌟 Learning Champion!');
+                        clearInterval(interval);
+                        // Show payment page after progress completes
+                        setTimeout(() => {
+                            showPaymentPage();
+                        }, 1500);
+                    }
+                }, 50);
+            }, 500);
+        }
+
+        function addAchievement(text) {
+            const achievementsDiv = document.getElementById('achievements');
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement';
+            achievement.textContent = text;
+            achievementsDiv.appendChild(achievement);
+        }
+
+        // Payment page functionality
+        function showPaymentPage() {
+            document.getElementById('payment-page').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentPage() {
+            document.getElementById('payment-page').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function processPurchase() {
+            alert('🎉 Congratulations! Your purchase is being processed.\n\n✅ You will receive course access within 24 hours\n📧 Check your email for confirmation\n🎓 Welcome to your learning journey!');
+            closePaymentPage();
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
